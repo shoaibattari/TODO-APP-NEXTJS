@@ -1,91 +1,68 @@
-import Image from 'next/image'
-import { Inter } from '@next/font/google'
-import styles from './page.module.css'
-
-const inter = Inter({ subsets: ['latin'] })
-
+"use client"
+import { Button, Flex, ListItem, UnorderedList, Text, Input, Box } from '@chakra-ui/react'
+import { use, useState } from 'react'
 export default function Home() {
+  const [tasks, setTasks] = useState(['first'])
+  const [Item, setItem] = useState("")
+  function removeItem(taskName: string) {
+    setTasks(tasks.filter(task => {
+      return task != taskName
+    }))
+  }
+
+
+  function AddItem() {
+    if (Item != "" && !tasks.includes(Item)) {
+      let temp = tasks;
+      temp.push(Item)
+      setTasks(temp)
+      setItem("")
+    }
+  }
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-        <div className={styles.thirteen}>
-          <Image src="/thirteen.svg" alt="13" width={40} height={31} priority />
-        </div>
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://beta.nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
+    <>
+      <Flex
+        padding='2'
+        flexDirection="column">
+        <Text fontSize='3xl' textAlign='center' color='blue.400'>AWESOME TODO APP </Text>
+        <Text fontSize='3xl' color='purple'>PLEASE ENTER YOUR TODOS: </Text>
+        <Input
+          placeholder='Item Name'
+          value={Item}
+          color="black"
+          // border='solid'
+          onChange={(e) => {
+            setItem(e.target.value)
+          }}
         >
-          <h2 className={inter.className}>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p className={inter.className}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
+        </Input>
 
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={inter.className}>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p className={inter.className}>Explore the Next.js 13 playground.</p>
-        </a>
 
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
+        <Button size='lg' m='5' bgColor='blue.400' color='white'
+          onClick={AddItem}>Add Item</Button>
+      </Flex>
+      <Box>
+        <UnorderedList
+          p="1"
         >
-          <h2 className={inter.className}>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p className={inter.className}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  )
+          {tasks.map((task) => {
+            return (<ListItem key={task} p='1' m='1'  >
+              {task}
+              <Button size='md' bgColor='red.400' color='black'
+                ml={['80%', "80%", "90%"]}
+                mt={['-5',"-5",'0']}
+                onClick={() => {
+                  removeItem(task)
+                }}>
+                Delete
+                
+              </Button>
+
+
+            </ListItem>)
+          })}
+        </UnorderedList></Box>
+
+    </>)
+
 }
