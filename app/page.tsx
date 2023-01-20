@@ -1,9 +1,10 @@
 "use client"
-import { Button, Flex, ListItem, UnorderedList, Text, Input, Box } from '@chakra-ui/react'
+import { Button, Flex, ListItem, UnorderedList, Text, Input, Box, ButtonGroup } from '@chakra-ui/react'
 import { use, useState } from 'react'
 export default function Home() {
-  const [tasks, setTasks] = useState(['first'])
+  const [tasks, setTasks] = useState(['WELLCOME TO TODO APP'])
   const [Item, setItem] = useState("")
+
   function removeItem(taskName: string) {
     setTasks(tasks.filter(task => {
       return task != taskName
@@ -23,14 +24,14 @@ export default function Home() {
     <>
       <Flex
         padding='2'
+        backgroundColor='ButtonHighlight'
         flexDirection="column">
-        <Text fontSize='3xl' textAlign='center' color='blue.400'>AWESOME TODO APP </Text>
-        <Text fontSize='3xl' color='purple'>PLEASE ENTER YOUR TODOS: </Text>
+        <Text fontSize={['2xl', '3xl', '3xl']} textAlign='center' color='black'>AWESOME TODO APP </Text>
+        <Text mb='2' fontSize={['1xl', '3xl', '3xl']} color='black'>PLEASE ENTER YOUR TODOS: </Text>
         <Input
-          placeholder='Item Name'
+          placeholder='ENTER YOUR TODO'
           value={Item}
           color="black"
-          // border='solid'
           onChange={(e) => {
             setItem(e.target.value)
           }}
@@ -38,31 +39,32 @@ export default function Home() {
         </Input>
 
 
-        <Button size='lg' m='5' bgColor='blue.400' color='white'
-          onClick={AddItem}>Add Item</Button>
+        <Button size='md' m='4' bgColor='twitter.900' color='white'
+          onClick={AddItem}>ADD TODO</Button>
       </Flex>
-      <Box>
+      <Box
+        bgColor='aqua'
+      >
         <UnorderedList
-          p="1"
+          p='2'
+
         >
           {tasks.map((task) => {
-            return (<ListItem key={task} p='1' m='1'  >
+            return (<ListItem key={task}   >
               {task}
-              <Button size='md' bgColor='red.400' color='black'
-                ml={['80%', "80%", "90%"]}
-                mt={['-5',"-5",'0']}
+              <Button size='sm' bgColor='ActiveCaption' color='white'
+                ml={['80%', "85%", "95%"]}
+                mt='-9'
                 onClick={() => {
                   removeItem(task)
                 }}>
                 Delete
-                
+
               </Button>
-
-
             </ListItem>)
           })}
-        </UnorderedList></Box>
+        </UnorderedList>
+      </Box>
 
     </>)
-
 }
